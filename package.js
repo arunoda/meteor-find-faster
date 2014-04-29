@@ -22,6 +22,7 @@ Package.on_test(function(api) {
 
     'test/helpers.js',
     'test/can_use_fast_read.js',
-    'test/fetch.js'
+    'test/fetch.js',
+    'test/db_operations.js'
   ], 'server');  
 });
