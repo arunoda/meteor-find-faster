@@ -1,12 +1,12 @@
 Package.describe({
-  "summary": "Improving MongoDB Read Performance"
+  "summary": "Ultra Fast Implementation for Meteor's Collection.find()"
 });
 
 Package.on_use(function(api) {
   api.use(['livedata', 'mongo-livedata', 'random', 'minimongo', 'underscore'], ['server']);
 
   api.add_files([
-    'lib/fast_read.js',
+    'lib/find_faster.js',
     'lib/override.js',
   ], 'server');  
 
@@ -17,7 +17,7 @@ Package.on_test(function(api) {
   api.use(['livedata', 'mongo-livedata', 'random', 'minimongo', 'underscore'], ['server']);
   api.use(['tinytest'], ['server'])
   api.add_files([
-    'lib/fast_read.js',
+    'lib/find_faster.js',
     'lib/override.js',
 
     'test/helpers.js',

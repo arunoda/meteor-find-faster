@@ -4,7 +4,7 @@ Tinytest.addAsync('DB Opeations - sort', function(test, done) {
   coll.insert({_id: "bb", aa: 20})
   coll.insert({_id: "cc", aa: 15})
 
-  var cursor = coll.find({}, {sort: {aa: -1}, fastRead: true});
+  var cursor = coll.find({}, {sort: {aa: -1}, findFaster: true});
   // to test the fastRead usage,
   cursor.fetch(); 
   test.equal(cursor.fetch(), [
@@ -21,7 +21,7 @@ Tinytest.addAsync('DB Opeations - sort & limit', function(test, done) {
   coll.insert({_id: "bb", aa: 20})
   coll.insert({_id: "cc", aa: 15})
 
-  var cursor = coll.find({}, {sort: {aa: -1}, limit: 2, fastRead: true});
+  var cursor = coll.find({}, {sort: {aa: -1}, limit: 2, findFaster: true});
   cursor.fetch();
   test.equal(cursor.fetch(), [
     {_id: "bb", aa: 20}, 
@@ -39,7 +39,7 @@ Tinytest.addAsync('DB Opeations - field filtering', function(test, done) {
   var cursor = coll.find({}, {
     fields: {aa: 0}, 
     sort: {aa: -1},
-    fastRead: true
+    findFaster: true
   });
   cursor.fetch();
   test.equal(cursor.fetch(), [
@@ -63,7 +63,7 @@ Tinytest.addAsync('DB Opeations - trasnforming', function(test, done) {
       doc.edited = true;
       return doc;
     },
-    fastRead: true
+    findFaster: true
   });
   cursor.fetch();
   test.equal(cursor.fetch(), [
@@ -88,7 +88,7 @@ Tinytest.addAsync('DB Opeations - trasnforming - collection level', function(tes
   var cursor = coll.find({}, {
     fields: {aa: 0}, 
     sort: {aa: -1},
-    fastRead: true
+    findFaster: true
   });
   cursor.fetch();
   test.equal(cursor.fetch(), [
@@ -113,7 +113,7 @@ Tinytest.addAsync('DB Opeations - disable trasnforming - collection level;', fun
   var cursor = coll.find({}, {
     fields: {aa: 0}, 
     sort: {aa: -1},
-    fastRead: true,
+    findFaster: true,
     transform: null
   });
   cursor.fetch();
