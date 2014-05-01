@@ -161,7 +161,7 @@ Tinytest.addAsync('Meteor.findFasterOne() - normal', function(test, done) {
   coll.insert({_id: "bb", aa: 20})
   coll.insert({_id: "cc", aa: 15})
 
-  var doc = coll.findFasterOne({}, {sort: {aa: -1}});
+  var doc = coll.findOneFaster({}, {sort: {aa: -1}});
   test.equal(doc, {_id: "bb", aa: 20});
   done();
 });
