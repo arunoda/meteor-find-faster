@@ -1,0 +1,8 @@
+{
+  "name": "find-faster",
+  "description": "Faster & Efficient Implementation of Meteor's Collection.find()",
+  "homepage": "https://github.com/arunoda/meteor-find-faster",
+  "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
+  "version": "0.1.0",
+  "git": "https://github.com/arunoda/meteor-find-faster.git"
+}
