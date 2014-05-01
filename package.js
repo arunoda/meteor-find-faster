@@ -1,5 +1,5 @@
 Package.describe({
-  "summary": "Ultra Fast Implementation for Meteor's Collection.find()"
+  "summary": "Faster & Efficient Implementation of Meteor's Collection.find()"
 });
 
 Package.on_use(function(api) {
