@@ -2,7 +2,7 @@
 
 ### Faster & Efficient Implementation of Meteor's Collection.find()
 
-Find Faster is a faster and efficient implementation of `Collection.find()`. It creates a short lived observer for each identical query and use it as a cache to deliver efficient and faster MongoDB Collection reads.
+Find Faster is a faster and efficient implementation of `Collection.find()`. It creates a short lived observer for each identical query and uses it as a cache to deliver efficient and faster MongoDB Collection reads.
 
 > In order to get the benefit of `find-faster` you need configure your meteor app with an **oplog** connection.
 
@@ -19,19 +19,19 @@ var Posts = new Meteor.Collection();
 var data = Posts.findFaster({owner: 'arunoda'}).fetch();
 ~~~
 
-`findFaster()` does only supports `fetch`, `map` and `forEach` cursor methods only. For others you should not use `findFaster()`.
+`findFaster()` only supports `fetch`, `map` and `forEach` cursor methods only. For others you should not use `findFaster()`.
 
 ## What are benefits of Find Faster?
 
-Find Faster generally gives you lower responseTime for your reads and reduce the CPU usage. If you are reading a lot of data from MongoDB, the read performance and CPU usage will improve a lot.
+Find Faster generally gives you lower responseTime for your reads and reduced CPU usage. If you are reading a lot of data from MongoDB, the read performance and CPU usage will improve a lot.
 
-When you are fetching a lot of data from the MongoDB, node MongoDB driver needs to converts BSON objects coming from MongoDB into JavaScript objects. That is a CPU intensive task and that's why `find-faster` can improved the CPU usage a lot in those cases.
+When you are fetching a lot of data from the MongoDB, node MongoDB driver needs to converts BSON objects coming from MongoDB into JavaScript objects. That is a CPU intensive task and that's why `find-faster` can improve the CPU usage a lot in those cases.
 
 > Refer the Find Faster Introduction article on MeteorHacks for more information.
 
 ## When To Use `find-faster`
 
-Find Faster only activated if you are using the oplog and if your query satisfy the oplog. If not, it will fallback to the default. These are the places you can use find faster and it shines.
+Find Faster is only activated if you are using the oplog and if your query satisfies the oplog. If not, it will fall back to the default. These are the places you can use find faster and it shines.
 
 * If you are fetching a lot of data from MongoDB
 * If your collection has more reads than writes
@@ -39,13 +39,13 @@ Find Faster only activated if you are using the oplog and if your query satisfy 
 
 ## When Not To Use `find-faster`
 
-* If your query's cardinality is pretty high, then their will be more cache misses than hits
+* If your query's cardinality is pretty high, then there will be more cache misses than hits
 * If you really need the exact state of the db (more on this later)
-* if you don't use oplog and query does not satisfy the oplog (find-faster will fallback to the default, if the query cannot utilize the oplog)
+* If you don't use oplog and the query does not satisfy the oplog (find-faster will fallback to the default, if the query cannot utilize the oplog)
 
 ## Find Faster reads are Eventually Consistent
 
-That means, you are reading from a cache and it does not have the exact state as the DB at a given time, but it will come that state eventually. For an example, lets look at the following code. It **may** not work with `find-faster`
+That means, you are reading from a cache and it does not have the exact state as the DB at a given time, but it will come to  that state eventually. For an example, lets look at the following code. It **may** not work with `find-faster`
 
 ~~~js
 var doc = Posts.findOneFaster({_id: "hello"});
@@ -78,10 +78,10 @@ Meteor.methods({
 });
 ~~~
 
-Let's say, administrator has banned an user from chatting into a specific group. Admin only gets the confirmation message once Meteor updates all the observer's with the change. Since we maintain the cache as an observer, we also get notified.
+Let's say, administrator has banned a user from chatting with a specific group. Admin only gets the confirmation message once Meteor updates all the observer's with the change. Since we maintain the cache as an observer, we also get notified.
 
-So, if the user tries to chat into that group just after the admin saw the confirmation message, user will get blocked. That's because our cache got update as stated.
+So, if the user tries to chat with that group just after the admin saw the confirmation message, the user will get blocked. That's because our cache got update as stated.
 
-If the user is connected to another Meteor server other the admin connected to, user may can chat even after the admin saw the confirmation message, but that delay will be in milliseconds.
+If the user is connected to a different Meteor server than the admin connected to, the user may be able to chat even after the admin saw the confirmation message, but that delay will be in milliseconds.
 
 > That being said, do not use `find-faster` for mission critical activities if your collection has writes which might affect the activity.
