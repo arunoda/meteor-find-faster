@@ -165,3 +165,64 @@ Tinytest.addAsync('Meteor.findFasterOne() - normal', function(test, done) {
   test.equal(doc, {_id: "bb", aa: 20});
   done();
 });
+
+Tinytest.addAsync('Cursor Methods - fetch', function(test, done) {
+  var coll = CreateCollection();
+  coll.insert({_id: "aa", aa: 10})
+  coll.insert({_id: "bb", aa: 20})
+  coll.insert({_id: "cc", aa: 15})
+
+  var cursor = coll.find({}, {sort: {aa: -1}, findFaster: true});
+  // to test the fastRead usage,
+  cursor.fetch(); 
+  test.equal(cursor.fetch(), [
+    {_id: "bb", aa: 20}, 
+    {_id: "cc", aa: 15}, 
+    {_id: "aa", aa: 10}
+  ]);
+  done();
+});
+
+Tinytest.addAsync('Cursor Methods - forEach', function(test, done) {
+  var coll = CreateCollection();
+  coll.insert({_id: "aa", aa: 10})
+  coll.insert({_id: "bb", aa: 20})
+  coll.insert({_id: "cc", aa: 15})
+
+  var cursor = coll.find({}, {sort: {aa: -1}, findFaster: true});
+  // to test the fastRead usage,
+  cursor.fetch(); 
+  var data = [];
+  cursor.forEach(function(doc) {
+    data.push(doc);
+  }); 
+
+  test.equal(data, [
+    {_id: "bb", aa: 20}, 
+    {_id: "cc", aa: 15}, 
+    {_id: "aa", aa: 10}
+  ]);
+  done();
+});
+
+Tinytest.addAsync('Cursor Methods - map', function(test, done) {
+  var coll = CreateCollection();
+  coll.insert({_id: "aa", aa: 10})
+  coll.insert({_id: "bb", aa: 20})
+  coll.insert({_id: "cc", aa: 15})
+
+  var cursor = coll.find({}, {sort: {aa: -1}, findFaster: true});
+  // to test the fastRead usage,
+  cursor.fetch(); 
+  data = cursor.map(function(doc) {
+    delete doc.aa;
+    return doc;
+  }); 
+
+  test.equal(data, [
+    {_id: "bb"}, 
+    {_id: "cc"}, 
+    {_id: "aa"}
+  ]);
+  done();
+});
